@@ -18,6 +18,23 @@ services:
       - db
     environment:
       MYSQL_PASSWORD: hi54ftyugiy3
+    links:
+      - dd-agent
+
+  dd-agent:
+    image: datadog/agent:latest
+    ports:
+      - 8126:8126
+    environment:
+      DD_API_KEY: <API_KEY>
+      DD_APM_ENABLED: "true"
+      DD_LOGS_ENABLED: "true"
+      DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL: "true"
+      DD_AC_EXCLUDE: "name:datadog-agent"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
 
 volumes:
   mysql_data:
