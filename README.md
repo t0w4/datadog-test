@@ -1,24 +1,27 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+DatadogのAPMとlogの実装確認用リポジトリ
 
-Things you may want to cover:
+### 試しかた
+１. docker-compose.yml の <DatadogのAPI KEY>　の部分を実際の値に書き換える。
 
-* Ruby version
+２. コンテナを起動する。
+```bash
+docker-compose up -d --build
+```
+３. DBを作成する。
+```bash
+docker-compose run api bundle exec rails db:create
+```
 
-* System dependencies
+４. テーブルの作成を適用する。
+```bash
+docker-compose run api bundle exec rails db:migrate RAILS_ENV=development
+```
 
-* Configuration
+５. コンテナを再起動する。
+```bash
+docker-compose up -d --build
+```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+６. Datadogの画面でAPM、logが取得できていることを確認する。
